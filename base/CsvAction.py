@@ -10,7 +10,8 @@
 import os
 import csv
 import datetime
-
+import numpy as np
+import pandas as pd
 class CsvAction(object):
     def __init__(self):
         pass
@@ -35,7 +36,23 @@ class CsvAction(object):
             for row in reader:
                 print(row['first_name'], row['last_name'])
 
+class PdCsv(object):
+    def __init__(self):
+        pass
+    def readcsv(self, path):
+        self.df = pd.read_csv(path)
+        return self.df
+    def csvHead(self):
+        return self.df.head()
+    def csvInfo(self):
+        return self.df.info()
+    def duplicated(self):
+        self.df.duplicated().value_counts()
 
 if __name__ == '__main__':
-    c = CsvAction()
-    c.writeCsv(['a', 'b'])
+    # c = CsvAction()
+    # c.writeCsv(['a', 'b'])
+    path = os.path.join(os.path.abspath('..'), 'data', '2020-03-11 23:46:26.csv')
+    p = PdCsv()
+    # print(p.readcsv(path).info())
+    # print(p.readcsv(path).duplicated().value_counts())
