@@ -13,6 +13,7 @@ import datetime
 import time
 import csv
 import re
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -26,6 +27,7 @@ from matplotlib.font_manager import _rebuild
 
 from base.HtmlData import HtmlData
 from base.WordCloudAction import WordCloudAtion
+import pandas_profiling
 
 _rebuild()
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 引入加载字体名
@@ -337,6 +339,11 @@ class movieData(object):
         comment = df[u'导演'].to_string() + df[u'主演'].dropna().to_string()
         wl.wordCloudImage(word=comment, imageName=imageName, bg=bg)
 
+    def report(self):
+        df = self.pdCsv()
+        profile = pandas_profiling.ProfileReport(df, title="Douban Dataset")
+        profile.to_file(output_file=Path("../data/report.html"))
+
 
 if __name__ == '__main__':
     m = movieData()
@@ -346,11 +353,13 @@ if __name__ == '__main__':
     # m.yearData()
     # m.directorData()
     # m.scoreData()
-    m.scoreIndexSubChart()
-    m.scorePeopleSubChart()
-    m.typeChart()
-    m.countryChart()
-    m.directorChart()
-    m.commentWordCloud()
-    m.typeAndCountryWordCloud()
-    m.actorAnddirectorWordCloud()
+
+    # m.scoreIndexSubChart()
+    # m.scorePeopleSubChart()
+    # m.typeChart()
+    # m.countryChart()
+    # m.directorChart()
+    # m.commentWordCloud()
+    # m.typeAndCountryWordCloud()
+    # m.actorAnddirectorWordCloud()
+    m.report()
