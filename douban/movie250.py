@@ -28,6 +28,7 @@ from matplotlib.font_manager import _rebuild
 from base.HtmlData import HtmlData
 from base.WordCloudAction import WordCloudAtion
 import pandas_profiling
+from base.Mail import Mail
 
 _rebuild()
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 引入加载字体名
@@ -344,6 +345,13 @@ class movieData(object):
         profile = pandas_profiling.ProfileReport(df, title="Douban Dataset")
         profile.to_file(output_file=Path("../data/report.html"))
 
+    def sent_mail(self, from_who, to_who, subject, mail_content, pwd_auth):
+        m = Mail()
+        m.from_who = from_who
+        m.to_who = to_who
+        m.mail_content(subject=subject, to_alias=to_who, text=mail_content,
+                       attachment=Path("../data/report.html"))
+        m.send_mail(pwd=pwd_auth)
 
 if __name__ == '__main__':
     m = movieData()
@@ -362,4 +370,10 @@ if __name__ == '__main__':
     # m.commentWordCloud()
     # m.typeAndCountryWordCloud()
     # m.actorAnddirectorWordCloud()
-    m.report()
+    # m.report()
+    from_who = 'wo@126.com'
+    to_who = ['wo@qq.com']
+    mail_content = "hi~\nDouban 250 report"
+    subject = 'Douban 250 report'
+    pwd_auth = '***'
+    m.sent_mail(from_who, to_who, subject, mail_content, pwd_auth)
