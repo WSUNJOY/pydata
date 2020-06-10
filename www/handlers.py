@@ -18,7 +18,7 @@ from www.coroweb import get, post
 from www.models import User, Comment, Blog, next_id
 
 @get('/test')
-async def index1(request):
+async def test(request):
     users = await User.findAll()
     return {
         '__template__': 'test.html',
