@@ -49,3 +49,7 @@ class APIResourceNotFoundError(APIError):
 class APIPermissionError(APIError):
     def __init__(self, message=''):
         super(APIPermissionError, self).__init__('permission:forbidden', 'permission', message)
+
+if __name__ == '__main__':
+    import dectest
+    dectest.test()
